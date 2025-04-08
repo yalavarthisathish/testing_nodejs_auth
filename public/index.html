@@ -3,6 +3,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
+    <style>
+        #chat {
+            padding: 10px;
+            max-width: 600px;
+            margin: auto;
+        }
+    
+        .my-message {
+            background-color: #dcf8c6; /* WhatsApp-like green bubble */
+            margin-left: auto;
+            margin-right: 0;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            max-width: 60%;
+            text-align: right;
+        }
+    
+        .other-message {
+            background-color: #f1f0f0; /* Light gray bubble */
+            margin-left: 150px;
+            margin-right: auto;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            max-width: 60%;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <div id="user-list">
@@ -40,7 +69,8 @@
         });
 
         socket.on('chatMessage', (message) => {
-            addMessage(`<strong>${message.userName}</strong>: ${message.text}`);
+            const isMyMessage = message.userName === userName;
+            addMessage(`<strong>${message.userName}</strong>: ${message.text}`, isMyMessage);
         });
 
         messageForm.addEventListener('submit', (event) => {
@@ -55,9 +85,13 @@
             messageInput.value = "";
         })
 
-        function addMessage(input) {
+        function addMessage(input, isMyMessage) {
             const element = document.createElement('div');
             element.innerHTML = input;
+
+            // Add class based on who sent the message
+            element.className = isMyMessage ? 'my-message' : 'other-message';
+
             chat.appendChild(element);
 
             // scroll to the bottom of the container
