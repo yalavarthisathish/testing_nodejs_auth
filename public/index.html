@@ -31,6 +31,14 @@
             max-width: 60%;
             text-align: left;
         }
+
+        #send {
+            background-color: #dcf8c6;
+        }
+
+        #end-chat {
+            background-color: rgb(194, 39, 39);
+        }
     </style>
 </head>
 <body>
@@ -41,16 +49,18 @@
     <div id="chat"></div>
     <form id="message-form">
         <input type="text" id="message-input" placeholder="Enter the message" required>
-        <button type="submit">Send</button>
+        <button type="submit" id="send">Send</button>
+        <button type="button" id="end-chat">End Chat</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
 
-        const chat = document.getElementById('chat')
-        const usersList = document.getElementById('user-list')
-        const messageForm = document.getElementById('message-form')
-        const messageInput = document.getElementById('message-input')
+        const chat = document.getElementById('chat');
+        const usersList = document.getElementById('user-list');
+        const messageForm = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+        const endChat = document.getElementById('end-chat');
 
         const userName = prompt('Enter the username');
 
@@ -83,6 +93,10 @@
             })
 
             messageInput.value = "";
+        })
+
+        endChat.addEventListener('click', () => {
+            window.location.href = 'https://c.tenor.com/7W8A7VybUo8AAAAd/tenor.gif'
         })
 
         function addMessage(input, isMyMessage) {
